@@ -50,6 +50,7 @@ namespace Media_Info_To_VRChat_Discord
             };
             trayIcon.MouseDoubleClick += new MouseEventHandler(TrayIcon_MouseDoubleClick!);
             this.Resize += new EventHandler(Form1_Resize!);
+            this.FormClosing += new FormClosingEventHandler(Form1_FormClosing!);
             this.Shown += (sender, e) => Form1_Shown(sender!, e, isRunningWithSystem);
         }
 
@@ -129,7 +130,7 @@ namespace Media_Info_To_VRChat_Discord
                             _discordClient!.ClearPresence();
                             needUpdate = false;
                         }
-                        await Task.Delay(5000, token);
+                        await Task.Delay(2000, token);
                         continue;
                     }
 
@@ -137,6 +138,21 @@ namespace Media_Info_To_VRChat_Discord
 
                     var playbackInfo = currentSession.GetPlaybackInfo();
                     var mediaProperties = await currentSession.TryGetMediaPropertiesAsync();
+
+                    if (config.IgnoreSongsWithoutBothArtistAndAlbum)
+                    {
+                        if (mediaProperties!.Artist == "" && mediaProperties!.AlbumTitle == "")
+                        {
+                            title_label.Invoke(new Action(() => title_label.Text = "No playing media detected."));
+                            media_title.Invoke(new Action(() => media_title.Text = $""));
+                            media_title.Invoke(new Action(() => media_artist.Text = $""));
+                            media_title.Invoke(new Action(() => media_album.Text = $""));
+                            statusStrip1.Invoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"Null"; }));
+                            statusStrip1.Invoke(new MethodInvoker(delegate { playtime_label.Text = $"Null"; }));
+                            await Task.Delay(2000, token);
+                            continue;
+                        }
+                    }
 
                     var timeLine = currentSession.GetTimelineProperties();
                     var time_string = $"{FormatTime(timeLine.Position)}/{FormatTime(timeLine.EndTime)}";
@@ -147,6 +163,7 @@ namespace Media_Info_To_VRChat_Discord
                     media_title.Invoke(new Action(() => media_album.Text = $"Album: {mediaProperties.AlbumTitle}"));
                     statusStrip1.Invoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"{playbackInfo.PlaybackStatus}"; }));
                     statusStrip1.Invoke(new MethodInvoker(delegate { playtime_label.Text = $"{time_string}"; }));
+
 
                     if (config.EnableDiscord_Transfer)
                     {
@@ -334,6 +351,7 @@ namespace Media_Info_To_VRChat_Discord
             EnableDiscord_Transfer = false;
             HideMinimizedNotification = false;
             VRC_OSC_Refresh_Delay = 5;
+            IgnoreSongsWithoutBothArtistAndAlbum = false;
 
             // start with mediaProperties. end with propertie name
             VRC_Msg_Format =
@@ -347,6 +365,7 @@ namespace Media_Info_To_VRChat_Discord
         public string? VRC_Msg_Format { get; set; }
         public int VRC_OSC_Refresh_Delay { get; set; }
         public bool HideMinimizedNotification { get; set; }
+        public bool IgnoreSongsWithoutBothArtistAndAlbum { get; set; }
     }
 
 
@@ -370,6 +389,7 @@ namespace Media_Info_To_VRChat_Discord
                     EnableDiscord_Transfer = false,
                     VRC_OSC_Refresh_Delay = 5,
                     HideMinimizedNotification = false,
+                    IgnoreSongsWithoutBothArtistAndAlbum = false,
                     VRC_Msg_Format =
                         "Now Playing: {media.Title}\n" +
                         "Artist: {media.Artist}\n" +

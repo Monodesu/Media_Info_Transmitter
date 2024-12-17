@@ -37,6 +37,8 @@
             label2 = new Label();
             button1 = new Button();
             checkBox_hideNotify = new CheckBox();
+            checkBox_ignoreSongsWithoutSomeInfo = new CheckBox();
+            button2 = new Button();
             SuspendLayout();
             // 
             // checkBox_startWithSystem
@@ -74,7 +76,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(12, 170);
+            textBox1.Location = new Point(12, 201);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(339, 133);
@@ -84,7 +86,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 152);
+            label1.Location = new Point(12, 183);
             label1.Name = "label1";
             label1.Size = new Size(162, 15);
             label1.TabIndex = 4;
@@ -92,7 +94,7 @@
             // 
             // VRC_OSC_REFRESH_INPUT_BOX
             // 
-            VRC_OSC_REFRESH_INPUT_BOX.Location = new Point(192, 115);
+            VRC_OSC_REFRESH_INPUT_BOX.Location = new Point(231, 146);
             VRC_OSC_REFRESH_INPUT_BOX.Name = "VRC_OSC_REFRESH_INPUT_BOX";
             VRC_OSC_REFRESH_INPUT_BOX.Size = new Size(25, 23);
             VRC_OSC_REFRESH_INPUT_BOX.TabIndex = 5;
@@ -101,7 +103,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 118);
+            label2.Location = new Point(12, 149);
             label2.Name = "label2";
             label2.Size = new Size(174, 15);
             label2.TabIndex = 6;
@@ -109,9 +111,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(313, 7);
+            button1.Location = new Point(300, 7);
             button1.Name = "button1";
-            button1.Size = new Size(46, 27);
+            button1.Size = new Size(59, 27);
             button1.TabIndex = 7;
             button1.Text = "help";
             button1.UseVisualStyleBackColor = true;
@@ -128,11 +130,34 @@
             checkBox_hideNotify.UseVisualStyleBackColor = true;
             checkBox_hideNotify.CheckedChanged += checkBox_hideNotify_CheckedChanged;
             // 
+            // checkBox_ignoreSongsWithoutSomeInfo
+            // 
+            checkBox_ignoreSongsWithoutSomeInfo.AutoSize = true;
+            checkBox_ignoreSongsWithoutSomeInfo.Location = new Point(12, 112);
+            checkBox_ignoreSongsWithoutSomeInfo.Name = "checkBox_ignoreSongsWithoutSomeInfo";
+            checkBox_ignoreSongsWithoutSomeInfo.Size = new Size(254, 19);
+            checkBox_ignoreSongsWithoutSomeInfo.TabIndex = 9;
+            checkBox_ignoreSongsWithoutSomeInfo.Text = "Ignore songs without both artist and album";
+            checkBox_ignoreSongsWithoutSomeInfo.UseVisualStyleBackColor = true;
+            checkBox_ignoreSongsWithoutSomeInfo.CheckedChanged += checkBox_ignoreSongsWithoutSomeInfo_CheckedChanged;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(300, 37);
+            button2.Name = "button2";
+            button2.Size = new Size(59, 27);
+            button2.TabIndex = 10;
+            button2.Text = "debug";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // settingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(367, 315);
+            ClientSize = new Size(367, 345);
+            Controls.Add(button2);
+            Controls.Add(checkBox_ignoreSongsWithoutSomeInfo);
             Controls.Add(checkBox_hideNotify);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -163,5 +188,7 @@
         private Label label2;
         private Button button1;
         private CheckBox checkBox_hideNotify;
+        private CheckBox checkBox_ignoreSongsWithoutSomeInfo;
+        private Button button2;
     }
 }

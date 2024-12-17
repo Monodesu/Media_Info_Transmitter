@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Media_Info_Transmitter;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -37,6 +39,14 @@ namespace Media_Info_To_VRChat_Discord
 
             VRC_OSC_REFRESH_INPUT_BOX.Text = form1Instance.GlobalConfig.VRC_OSC_Refresh_Delay.ToString();
 
+            if (form1Instance.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum)
+            {
+                checkBox_ignoreSongsWithoutSomeInfo.Checked = true;
+            }
+            else
+            {
+                checkBox_ignoreSongsWithoutSomeInfo.Checked = false;
+            }
             if (form1Instance.GlobalConfig.HideMinimizedNotification)
             {
                 checkBox_hideNotify.Checked = true;
@@ -140,6 +150,17 @@ namespace Media_Info_To_VRChat_Discord
         private void checkBox_hideNotify_CheckedChanged(object sender, EventArgs e)
         {
             form1Instance!.GlobalConfig.HideMinimizedNotification = checkBox_hideNotify.Checked;
+        }
+
+        private void checkBox_ignoreSongsWithoutSomeInfo_CheckedChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum = checkBox_ignoreSongsWithoutSomeInfo.Checked;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            debug debugForm = new();
+            debugForm.Show();
         }
     }
 }
