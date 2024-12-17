@@ -48,10 +48,14 @@ namespace Media_Info_To_VRChat_Discord
                 ContextMenuStrip = trayMenu,
                 Visible = true
             };
-
             trayIcon.MouseDoubleClick += new MouseEventHandler(TrayIcon_MouseDoubleClick!);
             this.Resize += new EventHandler(Form1_Resize!);
-            if (isRunningWithSystem) this.Hide();
+            this.Shown += (sender, e) => Form1_Shown(sender!, e, isRunningWithSystem);
+        }
+
+        private void Form1_Shown(object sender, EventArgs e, bool isRunningWithSystem)
+        {
+            if (isRunningWithSystem) Hide();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -231,6 +235,8 @@ namespace Media_Info_To_VRChat_Discord
                 {
                     LargeImageKey = "https://assets.desu.life/discord_bot/12f4f041-be3a-4d50-abed-3174cc8d05a8.png",
                     LargeImageText = state
+                    // SmallImageKey = "Play"
+                    // SmallImageText = "Now playing"
                 }
             });
         }

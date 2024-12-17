@@ -143,6 +143,7 @@
             MaximizeBox = false;
             Name = "Form1";
             Text = "Media Info Transmitter v1.0";
+            WindowState = FormWindowState.Normal;
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             statusStrip1.ResumeLayout(false);
