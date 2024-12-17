@@ -13,6 +13,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+[Pp]roperties/
 
 # Mono Auto Generated Files
 mono_crash.*

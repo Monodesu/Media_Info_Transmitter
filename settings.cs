@@ -129,6 +129,9 @@ namespace Media_Info_To_VRChat_Discord
                             {media.PlaybackStatus}
 
                             For a new line, insert [n] at the end.
+
+                            github:
+                            https://github.com/Monodesu/Media_Info_Transmitter
                             """
                             , "help", MessageBoxButtons.OK, MessageBoxIcon.Information
                 );
