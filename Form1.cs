@@ -250,7 +250,7 @@ namespace Media_Info_To_VRChat_Discord
                 Timestamps = startTime,
                 Assets = new Assets()
                 {
-                    LargeImageKey = "https://assets.desu.life/discord_bot/12f4f041-be3a-4d50-abed-3174cc8d05a8.png",
+                    LargeImageKey = "https://assets.desu.life/discord_bot/apple_music_logo_2020.png",
                     LargeImageText = state
                     // SmallImageKey = "Play"
                     // SmallImageText = "Now playing"
