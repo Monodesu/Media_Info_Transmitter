@@ -1,0 +1,86 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Rider & JetBrains IDE settings
+.idea/
+*.sln.iml
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows specific files
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Visual Studio temporary files
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# Build artifacts
+*.builds
+*.cache
+*.ilk
+*.log
+*.obj
+*.pch
+*.pdb
+*.pgd
+*.rsp
+*.tlog
+*.tmp
+*.vsix
+*.vsixmanifest
+
+# Debug and Release Configurations
+[Dd]ebug*/
+[Rr]elease*/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+
+# Publish results
+app.publish/
+out/
+
+# NuGet Packages
+**/packages/*
+!**/packages/*.targets
+!**/packages/*.props
+
+# Generated files
+*.g.i.cs
+*.g.cs
+Generated/
+
+# Azure and Cloud
+*.azure*
+
+# Database
+*.mdf
+*.ldf
+
+# Resharper
+_ReSharper.*
+*.DotSettings.user
+
+# Tooling
+*.dotCover
+coverage.*
+coverage/
+
+# npm
+node_modules/
+npm-debug.log
+yarn-error.log
