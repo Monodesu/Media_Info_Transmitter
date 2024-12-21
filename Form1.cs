@@ -27,6 +27,8 @@ namespace Media_Info_To_VRChat_Discord
             Audio
         }
 
+        static Mutex mutex;
+
         private CancellationTokenSource? _cancellationTokenSource;
         private readonly IPEndPoint _oscEndpoint = new(IPAddress.Parse("127.0.0.1"), 9000);
         private static UdpClient? _vrchatUdpClient;
@@ -109,10 +111,16 @@ namespace Media_Info_To_VRChat_Discord
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
+            needUpdateGUI = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            mutex = new Mutex(true, "Global\\MediaInfoTransmitter", out bool isNewInstance);
+            if (!isNewInstance)
+            {
+                Application.Exit();
+            }
             StartBackgroundTask();
         }
 
