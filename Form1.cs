@@ -583,7 +583,7 @@ namespace Media_Info_To_VRChat_Discord
             }
         }
 
-        private void CheckExportFolder()
+        private static void CheckExportFolder()
         {
             if (!Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "export")))
             {

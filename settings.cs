@@ -164,7 +164,7 @@ namespace Media_Info_To_VRChat_Discord
 
                             For a new line, insert [n] at the end.
 
-                            Regarding Discord's RPC keys
+                            Regarding Discord's App ID for RPC
                             you need to create two apps separately at
                             https://discord.com/developers/applications
                             and fill in the app ID into the input box so 
