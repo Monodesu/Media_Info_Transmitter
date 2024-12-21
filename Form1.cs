@@ -230,8 +230,30 @@ namespace Media_Info_To_VRChat_Discord
                             {
                                 if (isThumbnailExportTaskRunning) return;
                                 isThumbnailExportTaskRunning = true;
+
+
                                 using Bitmap bitmapCopy = new(thumbnailImage);
-                                bitmapCopy.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "export\\thumbnail.png"), System.Drawing.Imaging.ImageFormat.Png);
+                                if (config.ResizeExportedThumbnail)
+                                {
+                                    int width = 100; //, height = 100;
+                                    using Bitmap resizedImage = new(width, width, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                                    using Graphics graphics = Graphics.FromImage(resizedImage);
+                                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                                    graphics.Clear(Color.Transparent);
+
+                                    int x = (width - bitmapCopy.Width * width / bitmapCopy.Width) / 2;
+                                    int y = (width - bitmapCopy.Height * width / bitmapCopy.Width) / 2;
+
+                                    graphics.DrawImage(bitmapCopy, x, y, width, width);
+                                    resizedImage.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "export\\thumbnail.png"), System.Drawing.Imaging.ImageFormat.Png);
+                                }
+                                else
+                                {
+                                    bitmapCopy.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "export\\thumbnail.png"), System.Drawing.Imaging.ImageFormat.Png);
+                                }
                                 isThumbnailExportTaskRunning = false;
                             }, token);
                         }
@@ -582,6 +604,7 @@ namespace Media_Info_To_VRChat_Discord
             IgnoreSongsWithoutBothArtistAndAlbum = false;
             EnableInformationExport = false;
             EnableThumbnailExport = false;
+            ResizeExportedThumbnail = true;
             // start with mediaProperties. end with propertie name
             VRC_Msg_Format =
                              "Now Playing: {media.Title}\n" +
@@ -604,8 +627,11 @@ namespace Media_Info_To_VRChat_Discord
         public int VRC_OSC_Refresh_Delay { get; set; }
         public bool HideMinimizedNotification { get; set; }
         public bool IgnoreSongsWithoutBothArtistAndAlbum { get; set; }
+
         public bool EnableInformationExport { get; set; }
         public bool EnableThumbnailExport { get; set; }
+
+        public bool ResizeExportedThumbnail { get; set; }
 
         public string? VRC_Msg_Format { get; set; }
         public string? Export_Msg_Format { get; set; }
