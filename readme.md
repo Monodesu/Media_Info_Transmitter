@@ -23,10 +23,10 @@ Here are some screenshots of this:
 ![Screenshot 5](images/5.png)
 
 ### Screenshot 6
-![Screenshot 5](images/5.png)
+![Screenshot 5](images/6.png)
 
 ### Screenshot 7
-![Screenshot 5](images/5.png)
+![Screenshot 5](images/7.png)
 
 ## Installation
 
