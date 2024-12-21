@@ -215,8 +215,8 @@ namespace Media_Info_To_VRChat_Discord
                     .Replace("{media.StartTime}", FormatTime(timeline!.StartTime))
                     .Replace("{media.AlbumTitle}", mediaProperties!.AlbumTitle)
                     .Replace("{media.Subtitle}", mediaProperties!.Subtitle)
-                    .Replace("{media.TrackNumber}", mediaProperties!.TrackNumber.ToString()
                     .Replace("{media.PlaybackStatus}", $"{playbackinfo!.PlaybackStatus}")
+                    .Replace("{media.TrackNumber}", $"{mediaProperties!.TrackNumber}"
                     );
             return rtn_msg;
         }
