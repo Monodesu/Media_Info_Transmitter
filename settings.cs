@@ -36,16 +36,40 @@ namespace Media_Info_To_VRChat_Discord
             }
 
             textBox1.Text = form1Instance!.GlobalConfig.VRC_Msg_Format!.Replace("\n", "[n]");
+            textBox2.Text = form1Instance!.GlobalConfig.Export_Msg_Format!.Replace("\n", "[n]");
+
+            textBox_musicAppID.Text = form1Instance!.GlobalConfig.Discord_App_Music_ID;
+            textBox_musicIconAddr.Text = form1Instance!.GlobalConfig.Discord_App_Music_Icon_URL;
+            textBox_videoAppID.Text = form1Instance!.GlobalConfig.Discord_App_Video_ID;
+            textBox_videoIconAddr.Text = form1Instance!.GlobalConfig.Discord_App_Video_Icon_URL;
 
             VRC_OSC_REFRESH_INPUT_BOX.Text = form1Instance.GlobalConfig.VRC_OSC_Refresh_Delay.ToString();
 
-            if (form1Instance.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum)
+
+            if (form1Instance.GlobalConfig.EnableInformationExport)
             {
-                checkBox_ignoreSongsWithoutSomeInfo.Checked = true;
+                checkBox_informationExport.Checked = true;
             }
             else
             {
-                checkBox_ignoreSongsWithoutSomeInfo.Checked = false;
+                checkBox_informationExport.Checked = false;
+            }
+
+            if (form1Instance.GlobalConfig.EnableThumbnailExport)
+            {
+                checkBox_ThumbnailExport.Checked = true;
+            }
+            else
+            {
+                checkBox_ThumbnailExport.Checked = false;
+            }
+            if (form1Instance.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum)
+            {
+                radioButton_IgnoreAction1.Checked = true;
+            }
+            else
+            {
+                radioButton_SwitchToVideoAction1.Checked = true;
             }
             if (form1Instance.GlobalConfig.HideMinimizedNotification)
             {
@@ -126,7 +150,7 @@ namespace Media_Info_To_VRChat_Discord
         {
             MessageBox.Show(
                             $$"""
-                            Currently supported:
+                            For format, currently supported:
 
                             {media.Title}
                             {media.Subtitle}
@@ -140,6 +164,12 @@ namespace Media_Info_To_VRChat_Discord
 
                             For a new line, insert [n] at the end.
 
+                            Regarding Discord's RPC keys
+                            you need to create two apps separately at
+                            https://discord.com/developers/applications
+                            and fill in the app ID into the input box so 
+                            that the Discord RPC can work properly.
+
                             github:
                             https://github.com/Monodesu/Media_Info_Transmitter
                             """
@@ -152,15 +182,57 @@ namespace Media_Info_To_VRChat_Discord
             form1Instance!.GlobalConfig.HideMinimizedNotification = checkBox_hideNotify.Checked;
         }
 
-        private void checkBox_ignoreSongsWithoutSomeInfo_CheckedChanged(object sender, EventArgs e)
-        {
-            form1Instance!.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum = checkBox_ignoreSongsWithoutSomeInfo.Checked;
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            debug debugForm = new();
+            Udebug debugForm = new();
             debugForm.Show();
+        }
+
+        private void radioButton_IgnoreAction1_CheckedChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum = true;
+        }
+
+        private void radioButton_SwitchToVideoAction1_CheckedChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum = false;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.Export_Msg_Format = textBox2.Text.Replace("[n]", "\n");
+        }
+
+        private void checkBox_informationExport_CheckedChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.EnableInformationExport = checkBox_informationExport.Checked;
+        }
+
+        private void checkBox_ThumbnailExport_CheckedChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.EnableThumbnailExport = checkBox_ThumbnailExport.Checked;
+        }
+
+        private void textBox_musicIconAddr_TextChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.Discord_App_Music_Icon_URL = textBox_musicIconAddr.Text;
+        }
+
+        private void textBox_videoIconAddr_TextChanged(object sender, EventArgs e)
+        {
+            form1Instance!.GlobalConfig.Discord_App_Video_Icon_URL = textBox_videoIconAddr.Text;
+        }
+
+        private void textBox_musicAppKey_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox_musicAppID.Text.Length < 1) textBox_musicAppID.Text = "0";
+            form1Instance!.GlobalConfig.Discord_App_Music_ID = textBox_musicAppID.Text;
+        }
+
+        private void textBox_videoAppKey_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox_videoAppID.Text.Length < 1) textBox_videoAppID.Text = "0";
+            form1Instance!.GlobalConfig.Discord_App_Video_ID = textBox_videoAppID.Text;
         }
     }
 }

@@ -12,11 +12,11 @@ using Windows.Media.Control;
 
 namespace Media_Info_Transmitter
 {
-    public partial class debug : Form
+    public partial class Udebug : Form
     {
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource? _cancellationTokenSource;
 
-        public debug()
+        public Udebug()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(debug_FormClosing!);

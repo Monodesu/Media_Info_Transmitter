@@ -1,6 +1,6 @@
 ﻿namespace Media_Info_Transmitter
 {
-    partial class debug
+    partial class Udebug
     {
         /// <summary>
         /// Required designer variable.

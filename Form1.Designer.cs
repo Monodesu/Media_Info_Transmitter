@@ -40,13 +40,15 @@
             media_album = new Label();
             button1 = new Button();
             notifyIcon1 = new NotifyIcon(components);
+            ThumbnailBox1 = new PictureBox();
             statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ThumbnailBox1).BeginInit();
             SuspendLayout();
             // 
             // title_label
             // 
             title_label.AutoSize = true;
-            title_label.Location = new Point(12, 9);
+            title_label.Location = new Point(9, 6);
             title_label.Name = "title_label";
             title_label.Size = new Size(57, 15);
             title_label.TabIndex = 0;
@@ -55,9 +57,9 @@
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, PlayStatusLabel, toolStripStatusLabel2, playtime_label });
-            statusStrip1.Location = new Point(0, 78);
+            statusStrip1.Location = new Point(0, 188);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(344, 22);
+            statusStrip1.Size = new Size(351, 22);
             statusStrip1.SizingGrip = false;
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
@@ -89,7 +91,7 @@
             // media_title
             // 
             media_title.AutoSize = true;
-            media_title.Location = new Point(12, 24);
+            media_title.Location = new Point(9, 21);
             media_title.Name = "media_title";
             media_title.Size = new Size(29, 15);
             media_title.TabIndex = 2;
@@ -98,7 +100,7 @@
             // media_artist
             // 
             media_artist.AutoSize = true;
-            media_artist.Location = new Point(12, 39);
+            media_artist.Location = new Point(9, 36);
             media_artist.Name = "media_artist";
             media_artist.Size = new Size(35, 15);
             media_artist.TabIndex = 3;
@@ -107,7 +109,7 @@
             // media_album
             // 
             media_album.AutoSize = true;
-            media_album.Location = new Point(12, 54);
+            media_album.Location = new Point(9, 51);
             media_album.Name = "media_album";
             media_album.Size = new Size(42, 15);
             media_album.TabIndex = 4;
@@ -115,7 +117,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(266, 4);
+            button1.Location = new Point(272, 154);
             button1.Name = "button1";
             button1.Size = new Size(69, 25);
             button1.TabIndex = 5;
@@ -128,11 +130,21 @@
             notifyIcon1.Text = "notifyIcon1";
             notifyIcon1.Visible = true;
             // 
+            // ThumbnailBox1
+            // 
+            ThumbnailBox1.Location = new Point(11, 75);
+            ThumbnailBox1.Name = "ThumbnailBox1";
+            ThumbnailBox1.Size = new Size(100, 100);
+            ThumbnailBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            ThumbnailBox1.TabIndex = 6;
+            ThumbnailBox1.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(344, 100);
+            ClientSize = new Size(351, 210);
+            Controls.Add(ThumbnailBox1);
             Controls.Add(button1);
             Controls.Add(media_album);
             Controls.Add(media_artist);
@@ -142,12 +154,12 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Form1";
-            Text = "Media Info Transmitter v1.0";
-            WindowState = FormWindowState.Normal;
+            Text = "Media Info Transmitter v1.1";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ThumbnailBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -165,5 +177,6 @@
         private ToolStripStatusLabel playtime_label;
         private Button button1;
         private NotifyIcon notifyIcon1;
+        private PictureBox ThumbnailBox1;
     }
 }
