@@ -126,6 +126,7 @@ namespace Media_Info_To_VRChat_Discord
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            mutex.ReleaseMutex();
             _cancellationTokenSource?.Cancel();
             _vrchatUdpClient?.Close();
             _discordClient?.Dispose();
