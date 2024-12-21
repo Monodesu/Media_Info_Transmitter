@@ -22,6 +22,12 @@ Here are some screenshots of this:
 ### Screenshot 5
 ![Screenshot 5](images/5.png)
 
+### Screenshot 6
+![Screenshot 5](images/5.png)
+
+### Screenshot 7
+![Screenshot 5](images/5.png)
+
 ## Installation
 
 You can get the latest release from [GitHub Releases](https://github.com/Monodesu/Media_Info_Transmitter/releases) and use it.

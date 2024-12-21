@@ -63,7 +63,7 @@ namespace Media_Info_To_VRChat_Discord
             {
                 checkBox_ThumbnailExport.Checked = false;
             }
-            if (form1Instance.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum)
+            if (form1Instance.GlobalConfig.IgnoreSongsWithoutAlbum)
             {
                 radioButton_IgnoreAction1.Checked = true;
             }
@@ -190,12 +190,12 @@ namespace Media_Info_To_VRChat_Discord
 
         private void radioButton_IgnoreAction1_CheckedChanged(object sender, EventArgs e)
         {
-            form1Instance!.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum = true;
+            form1Instance!.GlobalConfig.IgnoreSongsWithoutAlbum = true;
         }
 
         private void radioButton_SwitchToVideoAction1_CheckedChanged(object sender, EventArgs e)
         {
-            form1Instance!.GlobalConfig.IgnoreSongsWithoutBothArtistAndAlbum = false;
+            form1Instance!.GlobalConfig.IgnoreSongsWithoutAlbum = false;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

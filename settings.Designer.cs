@@ -170,7 +170,7 @@
             groupBox1.Size = new Size(347, 76);
             groupBox1.TabIndex = 11;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Priority action for media without both album and artist";
+            groupBox1.Text = "Priority action for media without album";
             // 
             // radioButton_SwitchToVideoAction1
             // 

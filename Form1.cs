@@ -157,7 +157,7 @@ namespace Media_Info_To_VRChat_Discord
 
 
 
-                    if (mediaProperties!.Artist == "" && mediaProperties!.AlbumTitle == "")
+                    if (mediaProperties!.AlbumTitle == "") // except for some specific songs, it's basically watching videos
                     {
                         if (CurrentMediaType != MediaType.Video)
                         {
@@ -167,7 +167,7 @@ namespace Media_Info_To_VRChat_Discord
                             }
                             CurrentMediaType = MediaType.Video;
                         }
-                        if (config.IgnoreSongsWithoutBothArtistAndAlbum)
+                        if (config.IgnoreSongsWithoutAlbum)
                         {
                             if (Visible)
                             {
@@ -301,7 +301,7 @@ namespace Media_Info_To_VRChat_Discord
                         {
                             title_label.Invoke(new Action(() => title_label.Text = "Some information of the media:"));
                             media_title.Invoke(new Action(() => media_title.Text = AdjustLabelText($"Title: {mediaProperties.Title}")));
-                            if (config.IgnoreSongsWithoutBothArtistAndAlbum)
+                            if (config.IgnoreSongsWithoutAlbum)
                             {
                                 media_title.Invoke(new Action(() => media_artist.Text = $""));
                                 media_title.Invoke(new Action(() => media_album.Text = $""));
@@ -309,7 +309,7 @@ namespace Media_Info_To_VRChat_Discord
                             else
                             {
                                 media_title.Invoke(new Action(() => media_artist.Text = AdjustLabelText($"Artist: {mediaProperties.Artist}")));
-                                media_title.Invoke(new Action(() => media_album.Text = AdjustLabelText($"Album: {mediaProperties.AlbumTitle}")));
+                                media_title.Invoke(new Action(() => media_album.Text = mediaProperties.AlbumTitle == "" ? "" : AdjustLabelText($"Album: {mediaProperties.AlbumTitle}")));
                             }
                             ThumbnailBox1.Image = thumbnailImage;
                         }
@@ -431,7 +431,7 @@ namespace Media_Info_To_VRChat_Discord
                 }
                 else
                 {
-                    state = "Watching video";
+                    state = mediaProperties!.Artist != "" ? $"By {mediaProperties!.Artist}" : "Watching video";
                     details = $"{mediaProperties!.Title}";
                 }
 
@@ -601,7 +601,7 @@ namespace Media_Info_To_VRChat_Discord
             EnableDiscord_Transfer = false;
             HideMinimizedNotification = false;
             VRC_OSC_Refresh_Delay = 5;
-            IgnoreSongsWithoutBothArtistAndAlbum = false;
+            IgnoreSongsWithoutAlbum = false;
             EnableInformationExport = false;
             EnableThumbnailExport = false;
             ResizeExportedThumbnail = true;
@@ -626,7 +626,7 @@ namespace Media_Info_To_VRChat_Discord
 
         public int VRC_OSC_Refresh_Delay { get; set; }
         public bool HideMinimizedNotification { get; set; }
-        public bool IgnoreSongsWithoutBothArtistAndAlbum { get; set; }
+        public bool IgnoreSongsWithoutAlbum { get; set; }
 
         public bool EnableInformationExport { get; set; }
         public bool EnableThumbnailExport { get; set; }
