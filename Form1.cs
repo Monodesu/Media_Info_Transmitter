@@ -38,8 +38,10 @@ namespace Media_Info_To_VRChat_Discord
         private string title_temp = "";
         private bool needUpdateThumbnail = true;
         private bool needUpdateGUI = true;
+
         private bool needUpdateIdleInfo = false;
         private bool needUpdateExportedInfo = false;
+
         private MediaType CurrentMediaType = MediaType.Audio;
 
         private bool isThumbnailExportTaskRunning = false;
@@ -47,6 +49,8 @@ namespace Media_Info_To_VRChat_Discord
 
         private NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
+
+        Image thumbnailImage = new Bitmap(100, 100);
 
         public Form1(bool isRunningWithSystem)
         {
@@ -128,7 +132,6 @@ namespace Media_Info_To_VRChat_Discord
         private async Task BackgroundUpdateTask(CancellationToken token)
         {
             config = ConfigManager.LoadConfig();
-            Image thumbnailImage = new Bitmap(100, 100);
             var mediaManager = GlobalSystemMediaTransportControlsSessionManager.RequestAsync().GetAwaiter().GetResult();
 
             while (!token.IsCancellationRequested)
@@ -139,7 +142,7 @@ namespace Media_Info_To_VRChat_Discord
                     var currentSession = mediaManager.GetCurrentSession();
                     if (currentSession == null)
                     {
-                        title_label.Invoke(new Action(() => title_label.Text = "No playing media detected."));
+                        title_label.BeginInvoke(new Action(() => title_label.Text = "No playing media detected."));
                         if (needUpdateIdleInfo)
                         {
                             SendOSCMessage(BuildMediaInfoMsgForVRC(null, null, null));
@@ -171,12 +174,12 @@ namespace Media_Info_To_VRChat_Discord
                         {
                             if (Visible)
                             {
-                                title_label.Invoke(new Action(() => title_label.Text = "No playing media detected."));
-                                media_title.Invoke(new Action(() => media_title.Text = $""));
-                                media_title.Invoke(new Action(() => media_artist.Text = $""));
-                                media_title.Invoke(new Action(() => media_album.Text = $""));
-                                statusStrip1.Invoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"Null"; }));
-                                statusStrip1.Invoke(new MethodInvoker(delegate { playtime_label.Text = $"Null"; }));
+                                title_label.BeginInvoke(new Action(() => title_label.Text = "No playing media detected."));
+                                media_title.BeginInvoke(new Action(() => media_title.Text = $""));
+                                media_title.BeginInvoke(new Action(() => media_artist.Text = $""));
+                                media_title.BeginInvoke(new Action(() => media_album.Text = $""));
+                                statusStrip1.BeginInvoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"Null"; }));
+                                statusStrip1.BeginInvoke(new MethodInvoker(delegate { playtime_label.Text = $"Null"; }));
                             }
 
                             await Task.Delay(2000, token);
@@ -216,7 +219,6 @@ namespace Media_Info_To_VRChat_Discord
                             using Stream netStream = stream.AsStreamForRead();
                             thumbnailImage.Dispose();
                             thumbnailImage = Image.FromStream(netStream);
-                            if (thumbnailImage is null) throw new Exception();
                         }
                         catch
                         {
@@ -294,36 +296,42 @@ namespace Media_Info_To_VRChat_Discord
                         }
                     }
 
+                    if (!Visible && ThumbnailBox1.Image is not null)
+                    {
+                        ThumbnailBox1.BeginInvoke(new Action(() => { ThumbnailBox1.Image = null; }));
+                    }
+
                     if (this.Visible && needUpdateGUI)
                     {
+                        if (!needUpdateGUI) return;
                         needUpdateGUI = false;
                         try
                         {
-                            title_label.Invoke(new Action(() => title_label.Text = "Some information of the media:"));
-                            media_title.Invoke(new Action(() => media_title.Text = AdjustLabelText($"Title: {mediaProperties.Title}")));
+                            title_label.BeginInvoke(new Action(() => title_label.Text = "Some information of the media:"));
+                            media_title.BeginInvoke(new Action(() => media_title.Text = AdjustLabelText($"Title: {mediaProperties.Title}")));
                             if (config.IgnoreSongsWithoutAlbum)
                             {
-                                media_title.Invoke(new Action(() => media_artist.Text = $""));
-                                media_title.Invoke(new Action(() => media_album.Text = $""));
+                                media_title.BeginInvoke(new Action(() => media_artist.Text = $""));
+                                media_title.BeginInvoke(new Action(() => media_album.Text = $""));
                             }
                             else
                             {
-                                media_title.Invoke(new Action(() => media_artist.Text = AdjustLabelText($"Artist: {mediaProperties.Artist}")));
-                                media_title.Invoke(new Action(() => media_album.Text = mediaProperties.AlbumTitle == "" ? "" : AdjustLabelText($"Album: {mediaProperties.AlbumTitle}")));
+                                media_title.BeginInvoke(new Action(() => media_artist.Text = AdjustLabelText($"Artist: {mediaProperties.Artist}")));
+                                media_title.BeginInvoke(new Action(() => media_album.Text = mediaProperties.AlbumTitle == "" ? "" : AdjustLabelText($"Album: {mediaProperties.AlbumTitle}")));
                             }
-                            ThumbnailBox1.Image = thumbnailImage;
+                            ThumbnailBox1.BeginInvoke(new Action(() => { ThumbnailBox1.Image = thumbnailImage; }));
                         }
                         catch { }
                     }
 
                     if (PlayStatusLabel.Text != $"{playbackInfo.PlaybackStatus}")
                     {
-                        statusStrip1.Invoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"{playbackInfo.PlaybackStatus}"; }));
+                        statusStrip1.BeginInvoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"{playbackInfo.PlaybackStatus}"; }));
                     }
 
                     if (playtime_label.Text != $"{time_string}")
                     {
-                        statusStrip1.Invoke(new MethodInvoker(delegate { playtime_label.Text = $"{time_string}"; }));
+                        statusStrip1.BeginInvoke(new MethodInvoker(delegate { playtime_label.Text = $"{time_string}"; }));
                     }
 
                     if (config.EnableDiscord_Transfer)
