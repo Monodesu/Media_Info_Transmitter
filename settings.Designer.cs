@@ -189,10 +189,10 @@
             radioButton_IgnoreAction1.AutoSize = true;
             radioButton_IgnoreAction1.Location = new Point(10, 22);
             radioButton_IgnoreAction1.Name = "radioButton_IgnoreAction1";
-            radioButton_IgnoreAction1.Size = new Size(59, 19);
+            radioButton_IgnoreAction1.Size = new Size(172, 19);
             radioButton_IgnoreAction1.TabIndex = 0;
             radioButton_IgnoreAction1.TabStop = true;
-            radioButton_IgnoreAction1.Text = "Ignore";
+            radioButton_IgnoreAction1.Text = "Stay with music information";
             radioButton_IgnoreAction1.UseVisualStyleBackColor = true;
             radioButton_IgnoreAction1.CheckedChanged += radioButton_IgnoreAction1_CheckedChanged;
             // 

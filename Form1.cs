@@ -168,8 +168,8 @@ namespace Media_Info_To_VRChat_Discord
                     var mediaProperties = await currentSession.TryGetMediaPropertiesAsync();
 
 
-
-                    if (mediaProperties!.AlbumTitle == "") // except for some specific songs, it's basically watching videos
+                    // somehow i can't get album title in some cases, so i just leave it
+                    if (mediaProperties!.AlbumArtist == "") // except for some specific songs, it's basically watching videos
                     {
                         if (CurrentMediaType != MediaType.Video)
                         {
@@ -179,21 +179,21 @@ namespace Media_Info_To_VRChat_Discord
                             }
                             CurrentMediaType = MediaType.Video;
                         }
-                        if (config.IgnoreSongsWithoutAlbum)
-                        {
-                            if (Visible)
-                            {
-                                title_label.BeginInvoke(new Action(() => title_label.Text = "No playing media detected."));
-                                media_title.BeginInvoke(new Action(() => media_title.Text = $""));
-                                media_title.BeginInvoke(new Action(() => media_artist.Text = $""));
-                                media_title.BeginInvoke(new Action(() => media_album.Text = $""));
-                                statusStrip1.BeginInvoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"Null"; }));
-                                statusStrip1.BeginInvoke(new MethodInvoker(delegate { playtime_label.Text = $"Null"; }));
-                            }
+                        //if (config.PriorityActionForMediaWithoutAlbum)
+                        //{
+                        //    if (Visible)
+                        //    {
+                        //        title_label.BeginInvoke(new Action(() => title_label.Text = "No playing media detected."));
+                        //        media_title.BeginInvoke(new Action(() => media_title.Text = $""));
+                        //        media_title.BeginInvoke(new Action(() => media_artist.Text = $""));
+                        //        media_title.BeginInvoke(new Action(() => media_album.Text = $""));
+                        //        statusStrip1.BeginInvoke(new MethodInvoker(delegate { PlayStatusLabel.Text = $"Null"; }));
+                        //        statusStrip1.BeginInvoke(new MethodInvoker(delegate { playtime_label.Text = $"Null"; }));
+                        //    }
 
-                            await Task.Delay(2000, token);
-                            continue;
-                        }
+                        //    await Task.Delay(2000, token);
+                        //    continue;
+                        //}
                     }
                     else
                     {
@@ -318,16 +318,16 @@ namespace Media_Info_To_VRChat_Discord
                         {
                             title_label.BeginInvoke(new Action(() => title_label.Text = "Some information of the media:"));
                             media_title.BeginInvoke(new Action(() => media_title.Text = AdjustLabelText($"Title: {mediaProperties.Title}")));
-                            if (config.IgnoreSongsWithoutAlbum)
-                            {
-                                media_title.BeginInvoke(new Action(() => media_artist.Text = $""));
-                                media_title.BeginInvoke(new Action(() => media_album.Text = $""));
-                            }
-                            else
-                            {
-                                media_title.BeginInvoke(new Action(() => media_artist.Text = AdjustLabelText($"Artist: {mediaProperties.Artist}")));
-                                media_title.BeginInvoke(new Action(() => media_album.Text = mediaProperties.AlbumTitle == "" ? "" : AdjustLabelText($"Album: {mediaProperties.AlbumTitle}")));
-                            }
+                            //if (config.PriorityActionForMediaWithoutAlbum)
+                            //{
+                            //    media_title.BeginInvoke(new Action(() => media_artist.Text = $""));
+                            //    media_title.BeginInvoke(new Action(() => media_album.Text = $""));
+                            //}
+                            //else
+                            //{
+                            media_title.BeginInvoke(new Action(() => media_artist.Text = AdjustLabelText($"Artist: {mediaProperties.Artist}")));
+                            media_title.BeginInvoke(new Action(() => media_album.Text = mediaProperties.AlbumTitle == "" ? "" : AdjustLabelText($"Album: {mediaProperties.AlbumTitle}")));
+                            //}
                             ThumbnailBox1.BeginInvoke(new Action(() => { ThumbnailBox1.Image = thumbnailImage; }));
                         }
                         catch { }
@@ -618,7 +618,7 @@ namespace Media_Info_To_VRChat_Discord
             EnableDiscord_Transfer = false;
             HideMinimizedNotification = false;
             VRC_OSC_Refresh_Delay = 5;
-            IgnoreSongsWithoutAlbum = false;
+            PriorityActionForMediaWithoutAlbum = false;
             EnableInformationExport = false;
             EnableThumbnailExport = false;
             ResizeExportedThumbnail = true;
@@ -643,7 +643,7 @@ namespace Media_Info_To_VRChat_Discord
 
         public int VRC_OSC_Refresh_Delay { get; set; }
         public bool HideMinimizedNotification { get; set; }
-        public bool IgnoreSongsWithoutAlbum { get; set; }
+        public bool PriorityActionForMediaWithoutAlbum { get; set; }
 
         public bool EnableInformationExport { get; set; }
         public bool EnableThumbnailExport { get; set; }

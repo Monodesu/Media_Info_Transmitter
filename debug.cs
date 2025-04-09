@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windows.Media;
 using Windows.Media.Control;
 
 namespace Media_Info_Transmitter
@@ -63,7 +64,7 @@ namespace Media_Info_Transmitter
                     listBox1.Invoke(new Action(() => listBox1.Items.Add($"{mediaProperties!.AlbumTrackCount}")));
                     listBox1.Invoke(new Action(() => listBox1.Items.Add($"{mediaProperties!.AlbumTitle}")));
                     listBox1.Invoke(new Action(() => listBox1.Items.Add($"{mediaProperties!.AlbumArtist}")));
-                    
+
                     listBox1.Invoke(new Action(() => listBox1.Items.Add($"{playbackInfo!.PlaybackType}")));
                     listBox1.Invoke(new Action(() => listBox1.Items.Add($"{playbackInfo!.IsShuffleActive}")));
                     listBox1.Invoke(new Action(() => listBox1.Items.Add($"{playbackInfo!.AutoRepeatMode}")));
